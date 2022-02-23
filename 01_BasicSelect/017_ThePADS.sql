@@ -57,6 +57,11 @@ The results of the first query are formatted to the problem description's specif
 The results of the second query are ascendingly ordered first by number of names corresponding to each profession ( 2 \leq 2 \leq 2 \leq 3 ), and then alphabetically by profession (doctor \leq singer, and actor \leq professor).
 */
 
-SELECT Name
+SELECT CONCAT(Name, "(", LEFT(Occupation, 1),")")
 FROM OCCUPATIONS
-ORDER BY Name DESC;
+ORDER BY Name ASC;
+
+SELECT CONCAT("There are a total of ", COUNT(Occupation), " ", LOWER(Occupation), "s.")
+FROM OCCUPATIONS
+GROUP BY Occupation 
+ORDER BY COUNT(Occupation) ASC, Occupation ASC;
