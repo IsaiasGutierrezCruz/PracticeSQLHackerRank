@@ -40,3 +40,8 @@ The third column is an alphabetically ordered list of Singer names.
 The fourth column is an alphabetically ordered list of Actor names.
 The empty cell data for columns with less than the maximum number of names per occupation (in this case, the Professor and Actor columns) are filled with NULL values.
 */
+
+SELECT Name AS Doctor, Name AS Professor, Name AS Singer, Name AS Actor 
+FROM OCCUPATIONS
+GROUP BY Occupation
+ORDER BY Name ASC;
