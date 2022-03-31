@@ -43,5 +43,13 @@ The empty cell data for columns with less than the maximum number of names per o
 
 SELECT Name AS Doctor, Name AS Professor, Name AS Singer, Name AS Actor 
 FROM OCCUPATIONS
-GROUP BY Occupation
+GROUP BY Occupation 
 ORDER BY Name ASC;
+
+SELECT Name
+FROM OCCUPATIONS
+WHERE Occupation = "Doctor"
+ORDER BY Name ASC;
+
+SELECT 
+  IF (Occupation='Doctor', Name, )
