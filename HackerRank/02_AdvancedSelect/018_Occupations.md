@@ -29,10 +29,13 @@ Jane | Actor
 Jenny | Doctor 
 Priya | Singer
 
-Sample output
+**Sample output**
+
+```
 Jenny Asshley Meera Jane 
 Samantha Christeen  Priya  Julia
 NULL     Ketty      NULL   Maria
+```
 
 Explanation
 
@@ -47,3 +50,7 @@ The empty cell data for columns with less than the maximum number of names per o
 ## Solutions
 
 ### MySQL
+
+```sql
+
+```
