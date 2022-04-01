@@ -52,5 +52,22 @@ The empty cell data for columns with less than the maximum number of names per o
 ### MySQL
 
 ```sql
-
+SET @rows_doctor:=0, @rows_professor:=0, @rows_singer:=0, @rows_actor:=0; 
+SELECT MIN(Doctor), MIN(Professor), MIN(Singer), MIN(Actor)
+FROM(
+  SELECT 
+    CASE
+      WHEN Occupation="Doctor" THEN (@rows_doctor := @rows_doctor + 1)
+      WHEN Occupation="Professor" THEN (@rows_professor := @rows_professor + 1)
+      WHEN Occupation="Singer" THEN (@rows_singer := @rows_singer + 1)
+      WHEN Occupation="Actor" THEN (@rows_actor:=@rows_actor + 1)
+    END AS RowsNumber, 
+    IF(Occupation="Doctor", Name, NULL) AS Doctor,
+    IF(Occupation="Professor", Name, NULL) AS Professor,
+    IF(Occupation="Singer", Name, NULL) AS Singer,
+    IF(Occupation="Actor", Name, NULL) AS Actor
+  FROM OCCUPATIONS
+  ORDER BY Name
+    ) temp_table
+GROUP BY RowsNumber;
 ```
