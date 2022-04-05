@@ -1,5 +1,23 @@
 # Occupations
 
+<style>
+    .heatMap {
+        width: 70%;
+        text-align: center;
+        margin: auto;
+    }
+    .heatMap th {
+        background: grey;
+        word-wrap: break-word;
+        text-align: center;
+    }
+
+    .heatMap2 tr:nth-child(1) { background: #7581ef; }
+    .heatMap2 tr:nth-child(2) { background: #7581ef; }
+    .heatMap2 tr:nth-child(3) { background: #7581ef; }
+    .heatMap2 tr:nth-child(5) { background: #7581ef; }
+</style>
+
 ## Description of the problem
 Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
 
@@ -66,6 +84,8 @@ FROM OCCUPATIONS;
 
 The result of this query is the following:
 
+<div class="heatMap">
+
 Doctor | Professor | Singer | Actor 
 --- | --- | --- | --- 
 NULL | Ashley | NULL | NULL
@@ -77,9 +97,14 @@ NULL |Meera| NULL| NULL
 Priya |NULL| NULL |NULL
 NULL| Priyanka |NULL |NULL
 
+</div>
+
 2. The next step is to select the values which will belong to each row. That is, we have to assign the value "1" to the first capable rows to form a new row without NULL values.
 In the following example, we can see that the rows in positions number 1, 2, 3, and 5 can form a full new row with the people's names.
 
+
+
+<div class="heatMap heatMap2">
 
 RowsNumber | Doctor | Professor | Singer | Actor 
 --- | --- | --- | --- | --- 
@@ -90,7 +115,11 @@ RowsNumber | Doctor | Professor | Singer | Actor
 1 |NULL |NULL |Jane| NULL
 3 |NULL |Maria |NULL |NULL
 
+</div>
 
+We can achieve this by using variables in MySQL with the following syntax: `SET @name_variable := <value>`. Specifically, we have to create a variable for each column in order to assign the position where we want to put each person. These new numbers will be stored in a new column called RowsNames. One of the requirements is that we have to sort alphabetically the data. We can use the "order by" statement. 
+
+The query until now looks like this:
 
 ```sql
 SET @rows_doctor:=0, @rows_professor:=0, @rows_singer:=0, @rows_actor:=0; 
@@ -106,8 +135,10 @@ SELECT
   IF(Occupation="Singer", Name, NULL) AS Singer,
   IF(Occupation="Actor", Name, NULL) AS Actor
 FROM OCCUPATIONS
+ORDER BY Name;
 ```
 
+1. 
 
 
 #### Answer
