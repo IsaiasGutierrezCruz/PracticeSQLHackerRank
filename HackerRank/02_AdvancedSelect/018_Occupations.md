@@ -37,7 +37,7 @@ Samantha Christeen  Priya  Julia
 NULL     Ketty      NULL   Maria
 ```
 
-Explanation
+**Explanation**
 
 The first column is an alphabetically ordered list of Doctor names.
 The second column is an alphabetically ordered list of Professor names.
@@ -50,6 +50,67 @@ The empty cell data for columns with less than the maximum number of names per o
 ## Solutions
 
 ### MySQL
+
+#### Process
+
+1. The first step is create a column for each occupation. We have to evaluate in each row of the original table what column corresponds with the current person and put his/her name in it. In the rest of the columns, we assign NULL. 
+
+```sql
+SELECT 
+  IF(Occupation="Doctor", Name, NULL) AS Doctor,
+  IF(Occupation="Professor", Name, NULL) AS Professor,
+  IF(Occupation="Singer", Name, NULL) AS Singer,
+  IF(Occupation="Actor", Name, NULL) AS Actor
+FROM OCCUPATIONS;
+```
+
+The result of this query is the following:
+
+Doctor | Professor | Singer | Actor 
+--- | --- | --- | --- 
+NULL | Ashley | NULL | NULL
+NULL |NULL| NULL | Samantha
+Julia |NULL |NULL| NULL
+NULL |Britney| NULL |NULL
+NULL |Maria| NULL| NULL
+NULL |Meera| NULL| NULL
+Priya |NULL| NULL |NULL
+NULL| Priyanka |NULL |NULL
+
+2. The next step is to select the values which will belong to each row. That is, we have to assign the value "1" to the first capable rows to form a new row without NULL values.
+In the following example, we can see that the rows in positions number 1, 2, 3, and 5 can form a full new row with the people's names.
+
+
+RowsNumber | Doctor | Professor | Singer | Actor 
+--- | --- | --- | --- | --- 
+1 | NULL |Ashley |NULL |NULL
+1 |NULL |NULL |NULL |Samantha
+1 |Julia| NULL| NULL| NULL
+2 |NULL |Britney| NULL| NULL
+1 |NULL |NULL |Jane| NULL
+3 |NULL |Maria |NULL |NULL
+
+
+
+```sql
+SET @rows_doctor:=0, @rows_professor:=0, @rows_singer:=0, @rows_actor:=0; 
+SELECT 
+  CASE
+    WHEN Occupation="Doctor" THEN (@rows_doctor := @rows_doctor + 1)
+    WHEN Occupation="Professor" THEN (@rows_professor := @rows_professor + 1)
+    WHEN Occupation="Singer" THEN (@rows_singer := @rows_singer + 1)
+    WHEN Occupation="Actor" THEN (@rows_actor:=@rows_actor + 1)
+  END AS RowsNumber, 
+  IF(Occupation="Doctor", Name, NULL) AS Doctor,
+  IF(Occupation="Professor", Name, NULL) AS Professor,
+  IF(Occupation="Singer", Name, NULL) AS Singer,
+  IF(Occupation="Actor", Name, NULL) AS Actor
+FROM OCCUPATIONS
+```
+
+
+
+#### Answer
 
 ```sql
 SET @rows_doctor:=0, @rows_professor:=0, @rows_singer:=0, @rows_actor:=0; 
@@ -71,3 +132,5 @@ FROM(
     ) temp_table
 GROUP BY RowsNumber;
 ```
+
+
