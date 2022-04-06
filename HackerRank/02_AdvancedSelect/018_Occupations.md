@@ -123,7 +123,7 @@ ORDER BY Name;
 
 ```sql
 SET @rows_doctor:=0, @rows_professor:=0, @rows_singer:=0, @rows_actor:=0; 
-SELECT MIN(Doctor), MIN(Professor), MIN(Singer), MIN(Actor)
+SELECT MIN(temp_table.Doctor), MIN(temp_table.Professor), MIN(temp_table.Singer), MIN(temp_table.Actor)
 FROM(
   SELECT 
     CASE
@@ -139,7 +139,7 @@ FROM(
   FROM OCCUPATIONS
   ORDER BY Name
     ) temp_table
-GROUP BY RowsNumber;
+GROUP BY temp_table.RowsNumber;
 ```
 
 The result looks like this:
@@ -159,7 +159,7 @@ We can see that in the rows where the table does not have any name is shown a NU
 
 ```sql
 SET @rows_doctor:=0, @rows_professor:=0, @rows_singer:=0, @rows_actor:=0; 
-SELECT MIN(Doctor), MIN(Professor), MIN(Singer), MIN(Actor)
+SELECT MIN(temp_table.Doctor), MIN(temp_table.Professor), MIN(temp_table.Singer), MIN(temp_table.Actor)
 FROM(
   SELECT 
     CASE
@@ -175,7 +175,5 @@ FROM(
   FROM OCCUPATIONS
   ORDER BY Name
     ) temp_table
-GROUP BY RowsNumber;
+GROUP BY temp_table.RowsNumber;
 ```
-
-
