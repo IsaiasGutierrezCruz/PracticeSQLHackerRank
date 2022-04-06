@@ -1,22 +1,10 @@
 # Occupations
 
-<style>
-    .heatMap {
-        width: 70%;
-        text-align: center;
-        margin: auto;
-    }
-    .heatMap th {
-        background: grey;
-        word-wrap: break-word;
-        text-align: center;
-    }
-
-    .heatMap2 tr:nth-child(1) { background: #7581ef; }
-    .heatMap2 tr:nth-child(2) { background: #7581ef; }
-    .heatMap2 tr:nth-child(3) { background: #7581ef; }
-    .heatMap2 tr:nth-child(5) { background: #7581ef; }
-</style>
+- [Description of the problem](#description-of-the-problem)
+- [Solutions](#solutions)
+  - [MySQL](#mysql)
+    - [Process](#process)
+    - [Answer](#answer)
 
 ## Description of the problem
 Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
@@ -84,7 +72,6 @@ FROM OCCUPATIONS;
 
 The result of this query is the following:
 
-<div class="heatMap">
 
 Doctor | Professor | Singer | Actor 
 --- | --- | --- | --- 
@@ -97,14 +84,9 @@ NULL |Meera| NULL| NULL
 Priya |NULL| NULL |NULL
 NULL| Priyanka |NULL |NULL
 
-</div>
 
 2. The next step is to select the values which will belong to each row. That is, we have to assign the value "1" to the first capable rows to form a new row without NULL values.
 In the following example, we can see that the rows in positions number 1, 2, 3, and 5 can form a full new row with the people's names.
-
-
-
-<div class="heatMap heatMap2">
 
 RowsNumber | Doctor | Professor | Singer | Actor 
 --- | --- | --- | --- | --- 
@@ -115,7 +97,6 @@ RowsNumber | Doctor | Professor | Singer | Actor
 1 |NULL |NULL |Jane| NULL
 3 |NULL |Maria |NULL |NULL
 
-</div>
 
 We can achieve this by using variables in MySQL with the following syntax: `SET @name_variable := <value>`. Specifically, we have to create a variable for each column in order to assign the position where we want to put each person. These new numbers will be stored in a new column called RowsNames. One of the requirements is that we have to sort alphabetically the data. We can use the "order by" statement. 
 
@@ -138,8 +119,41 @@ FROM OCCUPATIONS
 ORDER BY Name;
 ```
 
-1. 
+3. The last step is to use the data generated in the temporary table, called temp_table in this example, in a new query. First, we have to group the data using the RowsNumber column. Then, use the SELECT and MIN statements in each column in order to select the people's names from each new row given the values from the RowsNumber column. 
 
+```sql
+SET @rows_doctor:=0, @rows_professor:=0, @rows_singer:=0, @rows_actor:=0; 
+SELECT MIN(Doctor), MIN(Professor), MIN(Singer), MIN(Actor)
+FROM(
+  SELECT 
+    CASE
+      WHEN Occupation="Doctor" THEN (@rows_doctor := @rows_doctor + 1)
+      WHEN Occupation="Professor" THEN (@rows_professor := @rows_professor + 1)
+      WHEN Occupation="Singer" THEN (@rows_singer := @rows_singer + 1)
+      WHEN Occupation="Actor" THEN (@rows_actor:=@rows_actor + 1)
+    END AS RowsNumber, 
+    IF(Occupation="Doctor", Name, NULL) AS Doctor,
+    IF(Occupation="Professor", Name, NULL) AS Professor,
+    IF(Occupation="Singer", Name, NULL) AS Singer,
+    IF(Occupation="Actor", Name, NULL) AS Actor
+  FROM OCCUPATIONS
+  ORDER BY Name
+    ) temp_table
+GROUP BY RowsNumber;
+```
+
+The result looks like this:
+
+Doctor | Professor | Singer | Actor 
+--- | --- | --- | --- 
+Aamina | Ashley |Christeen| Eve
+Julia| Belvet |Jane| Jennifer
+Priya |Britney| Jenny| Ketty
+NULL |Maria |Kristeen |Samantha
+NULL |Meera| NULL |NULL
+NULL |Naomi| NULL |NULL
+
+We can see that in the rows where the table does not have any name is shown a NULL value.
 
 #### Answer
 
