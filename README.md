@@ -24,3 +24,4 @@ The exercises in this section were recovered from the [HackerRank](https://www.h
 - [Type of Triangle](https://github.com/IsaiasGutierrezCruz/SQLExercises/blob/main/HackerRank/02_AdvancedSelect/016_TypeOfTriangle.sql)
 - [The PADS](https://github.com/IsaiasGutierrezCruz/SQLExercises/blob/main/HackerRank/02_AdvancedSelect/017_ThePADS.sql)
 - [Occupations](https://github.com/IsaiasGutierrezCruz/SQLExercises/blob/main/HackerRank/02_AdvancedSelect/018_Occupations.md)
+- [Binary Tree Nodes](https://github.com/IsaiasGutierrezCruz/SQLExercises/blob/main/HackerRank/02_AdvancedSelect/019_BinaryTreeNodes.md)
