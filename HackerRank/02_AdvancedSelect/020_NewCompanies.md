@@ -99,6 +99,7 @@ SM2 | LM1 | C1
 SM3 | LM2 | C2
 
 - Manager table
+
 `manager_code` | `senior_manager_code` | `lead_manager_code` | `company_code`
 --- | --- | --- | ---
 M1 | SM1 | LM1 | C1

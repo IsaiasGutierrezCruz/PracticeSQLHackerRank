@@ -25,3 +25,4 @@ The exercises in this section were recovered from the [HackerRank](https://www.h
 - [The PADS](https://github.com/IsaiasGutierrezCruz/SQLExercises/blob/main/HackerRank/02_AdvancedSelect/017_ThePADS.sql)
 - [Occupations](https://github.com/IsaiasGutierrezCruz/SQLExercises/blob/main/HackerRank/02_AdvancedSelect/018_Occupations.md)
 - [Binary Tree Nodes](https://github.com/IsaiasGutierrezCruz/SQLExercises/blob/main/HackerRank/02_AdvancedSelect/019_BinaryTreeNodes.md)
+- [New Companies](HackerRank/02_AdvancedSelect/020_NewCompanies.md)
